@@ -1,9 +1,18 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from typing import Optional, List
 from uuid import UUID, uuid4
 from pydantic import BaseModel
 from enum import Enum
 from models import Car, Engine_Type, Car_Type, CarUpdateRequest
+from sqlalchemy.orm import Session
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 app = FastAPI()
@@ -41,8 +50,8 @@ def root():
 
 
 @app.get("/api/v1/cars")
-async def fetch_cars():
-    return db
+async def fetch_cars(db: Session = Depends(get_db)):
+    return db.query(CarModel)
 
 
 @app.post("/api/v1/cars", status_code=201)

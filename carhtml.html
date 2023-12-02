@@ -17,15 +17,17 @@
     <script>
       async function fetchCars() {
         try {
-          const response = await fetch("YOUR_FASTAPI_ENDPOINT_HERE");
+          const response = await fetch("http://127.0.0.1:8000/api/v1/cars");
           const cars = await response.json();
           const carList = document.getElementById("carList");
           cars.forEach((car) => {
             const carDiv = document.createElement("div");
             carDiv.className = "bg-white p-4 rounded shadow";
-            carDiv.innerHTML = `<h2 class="font-semibold">${car.make} ${car.model}</h2>
+            carDiv.innerHTML = `<h2 class="font-semibold">${car.car_name} ${car.price}</h2>
                                         <p>Year: ${car.year}</p>
-                                        <p>Price: $${car.price}</p>`;
+                                        <p>Price: $${car.price}</p>
+                                        <p>car_type: $${car.car_type}</p>
+                                        <p>engine_type: $${car.engine_type}</p>`;
             carList.appendChild(carDiv);
           });
         } catch (error) {
