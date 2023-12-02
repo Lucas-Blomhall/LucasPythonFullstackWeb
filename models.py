@@ -4,21 +4,29 @@ from pydantic import BaseModel
 from enum import Enum
 
 
-class Gender(str, Enum):
-    male = "male"
-    female = "female"
+class Engine_Type(str, Enum):
+    fuel = "fuel"
+    electric = "electric"
 
 
-class Role(str, Enum):
-    admin = "admin"
-    user = "user"
-    student = "student"
+class Car_Type(str, Enum):
+    sedan = "sedan"
+    suv = "suv"
+    sport = "sport"
 
 
-class User(BaseModel):
+class Car(BaseModel):
     id: Optional[UUID] = uuid4
-    first_name: str
-    last_name: str
-    middle_name: Optional[str]
-    gender: Gender
-    roles: List[Role]
+    car_name: str
+    price: int
+    year: str
+    car_type: Car_Type
+    engine_type: Engine_Type
+
+
+class CarUpdateRequest(BaseModel):
+    car_name: Optional[str]
+    price: Optional[int]
+    year: Optional[str]
+    car_type: Optional[Car_Type]
+    engine_type: Optional[Engine_Type]

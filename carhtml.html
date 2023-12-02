@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Car Showcase</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-200">
+    <div class="container mx-auto px-4">
+      <h1 class="text-xl font-bold my-4">Car Listings</h1>
+      <div id="carList" class="grid grid-cols-3 gap-4">
+        <!-- Car items will be added here -->
+      </div>
+    </div>
+    <script>
+      async function fetchCars() {
+        try {
+          const response = await fetch("YOUR_FASTAPI_ENDPOINT_HERE");
+          const cars = await response.json();
+          const carList = document.getElementById("carList");
+          cars.forEach((car) => {
+            const carDiv = document.createElement("div");
+            carDiv.className = "bg-white p-4 rounded shadow";
+            carDiv.innerHTML = `<h2 class="font-semibold">${car.make} ${car.model}</h2>
+                                        <p>Year: ${car.year}</p>
+                                        <p>Price: $${car.price}</p>`;
+            carList.appendChild(carDiv);
+          });
+        } catch (error) {
+          console.error("Error fetching cars:", error);
+        }
+      }
+
+      fetchCars();
+    </script>
+  </body>
+</html>
