@@ -1,7 +1,11 @@
 from typing import Optional, List
-from uuid import UUID, uuid4
+# from uuid import UUID, uuid4
+# id = Column(UUID, primary_key=True, index=True, default=uuid4)
+# id: Optional[UUID] = uuid4
+
 from pydantic import BaseModel
 from enum import Enum
+from config import Base
 
 
 class Engine_Type(str, Enum):
@@ -16,7 +20,7 @@ class Car_Type(str, Enum):
 
 
 class Car(BaseModel):
-    id: Optional[UUID] = uuid4
+    id: Optional[int]
     car_name: str
     price: int
     year: str

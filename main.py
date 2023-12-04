@@ -3,8 +3,14 @@ from typing import Optional, List
 from uuid import UUID, uuid4
 from pydantic import BaseModel
 from enum import Enum
-from models import Car, Engine_Type, Car_Type, CarUpdateRequest
+from datamodel import Car, Engine_Type, Car_Type, CarUpdateRequest
 from sqlalchemy.orm import Session
+import datamodel
+from config import engine
+
+
+# Create the database tables
+datamodel.Base.metadata.create_all(bind=engine)
 
 
 def get_db():
@@ -51,7 +57,7 @@ def root():
 
 @app.get("/api/v1/cars")
 async def fetch_cars(db: Session = Depends(get_db)):
-    return db.query(CarModel)
+    return db.query(CarModel).all()
 
 
 @app.post("/api/v1/cars", status_code=201)
