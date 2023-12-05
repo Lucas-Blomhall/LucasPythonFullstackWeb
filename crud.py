@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException, status, FastAPI
 from sqlalchemy.orm import Session
 
-from config import SessionLocal
+from database import SessionLocal
 from datamodel import Car, CarUpdateRequest
 from sqlalchemyfile import CarModel
 
